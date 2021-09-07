@@ -28,8 +28,7 @@
 			<value>classpath:jdbc.properties</value>
 		</property>
 	</bean>
-	<bean id="dataSource"
-		class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName"
 			value="${jdbc.driverClassName}" />
 		<property name="url" value="${jdbc.url}" />
@@ -38,6 +37,7 @@
 	</bean>
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
+		<property name="packagesToScan" value="inventory.model"></property>
 		<property name="hibernateProperties" value="classpath:hibernate.properties"></property>
 		<property name="mappingResources">
 			<list>
@@ -55,12 +55,10 @@
 		
 		</property>
 	</bean>
-	<tx:annotation-driven
-		transaction-manager="transactionManager" />
-	<bean id="transactionManager"
-		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+	<bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager"/>
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 		<property name="order" value="0"></property>

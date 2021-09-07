@@ -13,8 +13,7 @@
 					aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown"
 					aria-expanded="false"> 
 					<img
-						src="<c:url value="/resources/images/img.jpg"/>" alt="">John
-						Doe
+						src="<c:url value="/resources/images/img.jpg"/>" alt="">${userInfo.name }
 				</a>
 					<div class="dropdown-menu dropdown-usermenu pull-right"
 						aria-labelledby="navbarDropdown">

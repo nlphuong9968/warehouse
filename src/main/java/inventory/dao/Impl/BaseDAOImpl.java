@@ -24,9 +24,9 @@ public class BaseDAOImpl<E> implements BaseDAO<E>{
 	
 	public String getGenericName() {
 		String s = getClass().getGenericSuperclass().toString();
-		Pattern pattern = Pattern.compile("\\<(>*?)//>");
+		Pattern pattern = Pattern.compile("\\<(.*?)\\>");
 		Matcher m = pattern.matcher(s);
-		String generic = "";
+		String generic="null";
 		if(m.find()) {
 			generic = m.group(1);
 		}
@@ -49,10 +49,10 @@ public class BaseDAOImpl<E> implements BaseDAO<E>{
 	public List<E> findByProperty(String property, Object value) {
 		log.info("Find by Property");
 		StringBuilder queryStr = new StringBuilder();
-		queryStr.append(" from ").append(getGenericName()).append(" as model where model.activeFlag=1 and model.").append(property).append(" = ?");
+		queryStr.append(" from ").append(getGenericName()).append(" as model where model.activeFlag=1 and model.").append(property).append(" = :property");
 		log.info("Query find all ====>"+queryStr.toString());
 		Query<E> query = sessionFactory.getCurrentSession().createQuery(queryStr.toString());
-		query.setParameter(0, value);
+		query.setParameter("property", value);
 		
 		return query.getResultList();
 	}

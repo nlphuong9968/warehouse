@@ -29,7 +29,7 @@ public class LoginValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userName", "msg.required");
 		ValidationUtils.rejectIfEmpty(errors, "password", "msg.required");
 		
-		if(StringUtils.isEmpty(user.getUserName()) && !StringUtils.isEmpty(user.getPassword())) {
+		if(!StringUtils.isEmpty(user.getUserName()) && !StringUtils.isEmpty(user.getPassword())) {
 			List<Users> users = userService.findByProperty("userName", user.getUserName());
 			if(user!=null && !users.isEmpty()) {
 				if(!users.get(0).getPassword().equals(user.getPassword())) {
@@ -40,5 +40,5 @@ public class LoginValidator implements Validator {
 			}
 		}
 	}
-
+	
 }
