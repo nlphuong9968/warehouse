@@ -10,4 +10,7 @@
 	<definition name="index" extends="master">
 		<put-attribute name="body" value="/WEB-INF/views/index.jsp"></put-attribute>
 	</definition>
+	<definition name="access-denied" template="/WEB-INF/views/error-page/access-denied.jsp">
+		<put-attribute name="body" value="/WEB-INF/views/index.jsp"></put-attribute>
+	</definition>
 </tiles-definitions>

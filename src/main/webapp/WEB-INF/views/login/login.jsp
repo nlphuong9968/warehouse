@@ -42,7 +42,7 @@
                 </div>
               </div>
               <div>
-                <form:input path="password" cssClass="form-control" placeholder="Password"/>
+                <form:input path="password" cssClass="form-control" type="password" placeholder="Password"/>
                 <div class="has-error">
                 	<form:errors path="password" cssClass="help-block"></form:errors>
                 </div>

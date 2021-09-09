@@ -87,12 +87,25 @@ public class LoginController {
 		}
 		session.setAttribute(Constant.MENU_SESSION, menuList);
 		session.setAttribute(Constant.USER_INFO, user);
-		return "redirect:/";
+		return "redirect:/index";
 	}
 	
-	public void sortMenu(List<Menu> menus) {
+	@GetMapping("/access-denied")
+	public String accessDenied() {
+		return "access-denied";
+	}
+	
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		session.removeAttribute(Constant.USER_INFO);
+		session.removeAttribute(Constant.MENU_SESSION);
+		return "redirect:/login";
+	}
+	
+	private void sortMenu(List<Menu> menus) {
+		System.out.println();
 		Collections.sort(menus, new Comparator<Menu>() {
-			
+		
 			@Override
 			public int compare(Menu o1, Menu o2) {				
 				return o1.getOrderIndex() - o2.getOrderIndex();
