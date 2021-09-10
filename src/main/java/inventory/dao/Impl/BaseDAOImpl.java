@@ -2,6 +2,7 @@ package inventory.dao.Impl;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,12 +34,21 @@ public class BaseDAOImpl<E> implements BaseDAO<E>{
 		return generic;
 	}
 
-	public List<E> findAll() {
+	public List<E> findAll(String queryStr, Map<String, Object> mapParams) {
 		log.info("Find all record from db");
 		StringBuilder query = new StringBuilder();
 		query.append(" from ").append(getGenericName()).append(" as model where model.activeFlag=1");
+		if(queryStr!=null && !queryStr.isEmpty()) {
+			query.append(queryStr);
+		}
+		Query<E> queryQ = sessionFactory.getCurrentSession().createQuery(query.toString());
+		if(mapParams!=null && !mapParams.isEmpty()) {
+			for (String key : mapParams.keySet()) {
+				queryQ.setParameter(key, mapParams.get(key));
+			}
+		}
 		log.info("Query find all ====>"+query.toString());
-		return sessionFactory.getCurrentSession().createQuery(query.toString()).list();
+		return queryQ.list();
 	}
 
 	public E findById(Class<E> e, Serializable id) {

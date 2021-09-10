@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import inventory.model.Category;
 import inventory.service.CategoryService;
@@ -48,9 +49,9 @@ public class CategoryController {
 		}
 	}
 	
-	@GetMapping("/category/list")
-	public String showCategoryList(Model model, HttpSession session) {
-		List<Category> categories = categoryService.getAllCategory();
+	@RequestMapping(value="/category/list")
+	public String showCategoryList(Model model, HttpSession session,@ModelAttribute("searchForm") Category category) {
+		List<Category> categories = categoryService.getAllCategory(category);
 		if(session.getAttribute(Constant.MSG_SUCCESS)!= null) {
 			model.addAttribute(Constant.MSG_SUCCESS, session.getAttribute(Constant.MSG_SUCCESS));
 			session.removeAttribute(Constant.MSG_SUCCESS);

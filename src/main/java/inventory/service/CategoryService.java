@@ -1,11 +1,14 @@
 package inventory.service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import inventory.dao.CategoryDAO;
 import inventory.model.Category;
@@ -45,9 +48,25 @@ public class CategoryService {
 		return categoryDAO.findByProperty(property, value);
 	}
 	
-	public List<Category> getAllCategory(){
+	public List<Category> getAllCategory(Category category){
 		logger.info("Show all category");
-		return categoryDAO.findAll();
+		StringBuilder query = new StringBuilder();
+		Map<String, Object> mapParams = new HashMap<String, Object>();
+		if(category!= null) {
+			if(category.getId() != null && category.getId() != 0) {
+				query.append(" and model.id=:id ");
+				mapParams.put("id", category.getId());
+			}
+			if(category.getCode() != null && !StringUtils.isEmpty(category.getCode())) {
+				query.append(" and model.code=:code ");
+				mapParams.put("code", category.getCode());
+			}
+			if(category.getName() != null && !StringUtils.isEmpty(category.getName())) {
+				query.append(" and model.name=:name ");
+				mapParams.put("name", category.getName());
+			}
+		}
+		return categoryDAO.findAll(query.toString(), mapParams);
 	}
 	
 	public Category findByIdCategory(int id) {
