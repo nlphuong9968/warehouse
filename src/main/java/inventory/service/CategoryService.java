@@ -44,4 +44,14 @@ public class CategoryService {
 		logger.info("Property: "+ property+"/tValue: "+value.toString());
 		return categoryDAO.findByProperty(property, value);
 	}
+	
+	public List<Category> getAllCategory(){
+		logger.info("Show all category");
+		return categoryDAO.findAll();
+	}
+	
+	public Category findByIdCategory(int id) {
+		logger.info("Find by ID: "+ id);
+		return categoryDAO.findById(Category.class, id);
+	}
 }
