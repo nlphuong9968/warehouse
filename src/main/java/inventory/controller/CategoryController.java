@@ -1,9 +1,12 @@
 package inventory.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import inventory.model.Category;
 import inventory.service.CategoryService;
@@ -34,6 +38,8 @@ public class CategoryController {
 		if(binder.getTarget() == null) {
 			return;
 		}
+		SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
 		if(binder.getTarget().getClass() == Category.class) {
 			binder.setValidator(categoryValidator);
 		}
@@ -59,7 +65,8 @@ public class CategoryController {
 		log.info("Edit category with id ="+id);
 		Category category = categoryService.findByIdCategory(id);
 		if(category != null) {
-			model.addAttribute("title", "Edit Category");
+			model.addAttribute("titlePage", "Edit Category");
+			model.addAttribute("modelForm", category);
 			model.addAttribute("viewOnly", false);
 			return "category-action";		
 		}
@@ -71,16 +78,25 @@ public class CategoryController {
 		log.info("Edit category with id ="+id);
 		Category category = categoryService.findByIdCategory(id);
 		if(category != null) {
-			model.addAttribute("title", "View Category");
+			model.addAttribute("titlePage", "View Category");
+			model.addAttribute("modelForm", category);
 			model.addAttribute("viewOnly", true);
 			return "category-action";		
 		}
 		return "redirect:/category/list";
 	}
 	
-	@GetMapping("/category/save")
+	@PostMapping("/category/save")
 	public String save(Model model, @ModelAttribute("modelForm") @Validated Category category, BindingResult result	) {
 		if(result.hasErrors()) {
+			if(category.getId()!= null) {
+				model.addAttribute("titlePage", "Edit Category");
+			}else {
+				model.addAttribute("titlePage", "Add Category");
+			}
+			
+			model.addAttribute("modelForm", category);
+			model.addAttribute("viewOnly", false);
 			return "category-action";		
 		}
 		if(category.getId()!=null && category.getId()!=0) {

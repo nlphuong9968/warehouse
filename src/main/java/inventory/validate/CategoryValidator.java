@@ -12,11 +12,11 @@ import inventory.model.Category;
 import inventory.service.CategoryService;
 
 @Component
-public class CategoryValidator implements Validator{
-	
+public class CategoryValidator implements Validator {
+
 	@Autowired
 	CategoryService categoryService;
-	
+
 	@Override
 	public boolean supports(Class<?> clazz) {
 		// TODO Auto-generated method stub
@@ -29,14 +29,20 @@ public class CategoryValidator implements Validator{
 		ValidationUtils.rejectIfEmpty(errors, "code", "msg.required");
 		ValidationUtils.rejectIfEmpty(errors, "name", "msg.required");
 		ValidationUtils.rejectIfEmpty(errors, "description", "msg.required");
-		if(category.getCode() != null) {
+		if (category.getCode() != null) {
 			List<Category> results = categoryService.findCategory("code", category.getCode());
-			if(results !=null && !results.isEmpty()) {
+			if (results != null && !results.isEmpty()) {
+				if (category.getId() != null && category.getId() != 0) {
+					if (results.get(0).getId() != category.getId()) {
+						errors.rejectValue("code", "msg.code.exist");
+					}
+				
+			} else {
+
 				errors.rejectValue("code", "msg.code.exist");
 			}
+			}
 		}
-		
-		
 	}
 
 }

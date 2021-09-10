@@ -36,7 +36,7 @@ public class BaseDAOImpl<E> implements BaseDAO<E>{
 	public List<E> findAll() {
 		log.info("Find all record from db");
 		StringBuilder query = new StringBuilder();
-		query.append(" from ").append(getGenericName()).append("as model where model.activeFlag=1");
+		query.append(" from ").append(getGenericName()).append(" as model where model.activeFlag=1");
 		log.info("Query find all ====>"+query.toString());
 		return sessionFactory.getCurrentSession().createQuery(query.toString()).list();
 	}
