@@ -78,7 +78,7 @@
 <script type="text/javascript">
 	$(document).ready(
 			function() {
-				$('categorylistId').addClass('current-page').siblings()
+				$('#categorylistId').addClass('current-page').siblings()
 						.removeClass('current-page');
 				var parent = $('#categorylistId').parents('li');
 				parent.addClass('active').siblings().removeClass('active');

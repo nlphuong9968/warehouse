@@ -18,7 +18,7 @@ public class CategoryService {
 	@Autowired
 	private CategoryDAO<Category> categoryDAO;
 	
-	public void saveCategory(Category category) {
+	public void saveCategory(Category category) throws Exception{
 		logger.info("Insert category: "+category.toString());
 		category.setActiveFlag(1);
 		category.setCreateDate(new Date());
@@ -26,13 +26,13 @@ public class CategoryService {
 		categoryDAO.save(category);
 	}
 	
-	public void updateCategory(Category category) {
+	public void updateCategory(Category category) throws Exception{
 		logger.info("Update category: "+category.toString());
 		category.setUpdateDate(new Date());
 		categoryDAO.update(category);
 	}
 	
-	public void deleteCategory(Category category) {
+	public void deleteCategory(Category category) throws Exception{
 		category.setActiveFlag(0);
 		category.setUpdateDate(new Date());
 		logger.info("Delete category: "+category.toString());

@@ -36,11 +36,11 @@ public class CategoryValidator implements Validator {
 					if (results.get(0).getId() != category.getId()) {
 						errors.rejectValue("code", "msg.code.exist");
 					}
-				
-			} else {
 
-				errors.rejectValue("code", "msg.code.exist");
-			}
+				} else {
+
+					errors.rejectValue("code", "msg.code.exist");
+				}
 			}
 		}
 	}
