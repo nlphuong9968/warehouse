@@ -21,13 +21,13 @@
 					<div class="container">
 						<div class="row" style="text-align: center;">
 							<div class="col-md-2 col-sm-2">
-								<a href="<c:url value="/category/add"/> " class="btn btn-app"><i
+								<a href="<c:url value="/category/"/> " class="btn btn-app"><i
 									class="fa fa-plus"></i>Add</a>
 							</div>
 
 							<form:form modelAttribute="searchForm"
 								cssClass="form-horizontal form-label-left"
-								servletRelativeAction="/category/list" method="POST">
+								servletRelativeAction="/category/list/1" method="POST">
 
 
 								<div class="col-md-2 col-sm-2 item form-group">
@@ -101,7 +101,7 @@
 											<tr class="odd pointer">
 										</c:otherwise>
 									</c:choose>
-									<td class=" ">${loop.index+1}</td>
+									<td class=" ">${pageInfo.getOffset()+loop.index+1}</td>
 									<td class=" ">${category.id }</td>
 									<td class=" ">${category.code }</td>
 									<td class=" ">${category.name }</td>
@@ -117,6 +117,7 @@
 								</c:forEach>
 							</tbody>
 						</table>
+						<jsp:include page="../layout/paging.jsp"></jsp:include>
 					</div>
 				</div>
 			</div>
@@ -127,6 +128,11 @@
 $(document).ready(function(){
 	processMessage();
 });
+function gotoPage(page){
+	$("#searchForm").attr('action', '<c:url value="/category/list/"/>'+page);
+	$("#searchForm").submit();
+	
+}
 function confirmDelete(id){
 	if(confirm('Do you want delete this record?')){
 		window.location.href = '<c:url value="/category/delete/"/>'+id;

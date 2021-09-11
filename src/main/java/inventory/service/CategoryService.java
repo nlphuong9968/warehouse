@@ -12,6 +12,7 @@ import org.springframework.util.StringUtils;
 
 import inventory.dao.CategoryDAO;
 import inventory.model.Category;
+import inventory.model.Paging;
 
 @Service
 public class CategoryService {
@@ -48,7 +49,7 @@ public class CategoryService {
 		return categoryDAO.findByProperty(property, value);
 	}
 	
-	public List<Category> getAllCategory(Category category){
+	public List<Category> getAllCategory(Category category, Paging paging){
 		logger.info("Show all category");
 		StringBuilder query = new StringBuilder();
 		Map<String, Object> mapParams = new HashMap<String, Object>();
@@ -62,11 +63,11 @@ public class CategoryService {
 				mapParams.put("code", category.getCode());
 			}
 			if(category.getName() != null && !StringUtils.isEmpty(category.getName())) {
-				query.append(" and model.name=:name ");
-				mapParams.put("name", category.getName());
+				query.append(" and model.name like :name ");
+				mapParams.put("name", "%"+category.getName()+"%");
 			}
 		}
-		return categoryDAO.findAll(query.toString(), mapParams);
+		return categoryDAO.findAll(query.toString(), mapParams, paging);
 	}
 	
 	public Category findByIdCategory(int id) {
