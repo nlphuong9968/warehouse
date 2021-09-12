@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import inventory.model.Category;
 import inventory.model.Paging;
-import inventory.service.CategoryService;
+import inventory.service.ProductService;
 import inventory.util.Constant;
 import inventory.validate.CategoryValidator;
 
@@ -31,7 +31,7 @@ import inventory.validate.CategoryValidator;
 public class CategoryController {
 	
 	@Autowired
-	private CategoryService categoryService;
+	private ProductService productService;
 	
 	@Autowired
 	private CategoryValidator categoryValidator;
@@ -58,7 +58,7 @@ public class CategoryController {
 	public String showCategoryList(Model model, HttpSession session,@ModelAttribute("searchForm") Category category, @PathVariable("page") int page) {
 		Paging paging = new Paging(1);
 		paging.setIndexPage(page);
-		List<Category> categories = categoryService.getAllCategory(category, paging);
+		List<Category> categories = productService.getAllCategory(category, paging);
 		if(session.getAttribute(Constant.MSG_SUCCESS)!= null) {
 			model.addAttribute(Constant.MSG_SUCCESS, session.getAttribute(Constant.MSG_SUCCESS));
 			session.removeAttribute(Constant.MSG_SUCCESS);
@@ -83,7 +83,7 @@ public class CategoryController {
 	@GetMapping("/category/edit/{id}")
 	public String edit(Model model, @PathVariable("id") int id) {
 		log.info("Edit category with id ="+id);
-		Category category = categoryService.findByIdCategory(id);
+		Category category = productService.findByIdCategory(id);
 		if(category != null) {
 			model.addAttribute("titlePage", "Edit Category");
 			model.addAttribute("modelForm", category);
@@ -96,7 +96,7 @@ public class CategoryController {
 	@GetMapping("/category/view/{id}")
 	public String view(Model model, @PathVariable("id") int id) {
 		log.info("Edit category with id ="+id);
-		Category category = categoryService.findByIdCategory(id);
+		Category category = productService.findByIdCategory(id);
 		if(category != null) {
 			model.addAttribute("titlePage", "View Category");
 			model.addAttribute("modelForm", category);
@@ -121,7 +121,7 @@ public class CategoryController {
 		}
 		if(category.getId()!=null && category.getId()!=0) {
 			try {
-				categoryService.updateCategory(category);
+				productService.updateCategory(category);
 				session.setAttribute(Constant.MSG_SUCCESS, "Update success!!!");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -133,7 +133,7 @@ public class CategoryController {
 			
 		}else {
 			try {
-				categoryService.saveCategory(category);
+				productService.saveCategory(category);
 				session.setAttribute(Constant.MSG_SUCCESS, "Insert success!!!");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -148,10 +148,10 @@ public class CategoryController {
 	@GetMapping("/category/delete/{id}")
 	public String delete(Model model, @PathVariable("id") int id, HttpSession session) {
 		log.info("Delete category with id ="+id);
-		Category category = categoryService.findByIdCategory(id);
+		Category category = productService.findByIdCategory(id);
 		if(category != null) {
 			try {
-				categoryService.deleteCategory(category);
+				productService.deleteCategory(category);
 				session.setAttribute(Constant.MSG_SUCCESS, "Delete success!!!");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

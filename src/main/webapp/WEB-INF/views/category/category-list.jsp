@@ -21,7 +21,7 @@
 					<div class="container">
 						<div class="row" style="text-align: center;">
 							<div class="col-md-2 col-sm-2">
-								<a href="<c:url value="/category/"/> " class="btn btn-app"><i
+								<a href="<c:url value="/category/add"/> " class="btn btn-app"><i
 									class="fa fa-plus"></i>Add</a>
 							</div>
 
