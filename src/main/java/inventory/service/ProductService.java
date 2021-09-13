@@ -1,5 +1,7 @@
 package inventory.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -9,12 +11,14 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import inventory.dao.CategoryDAO;
 import inventory.dao.ProductInfoDAO;
 import inventory.model.Category;
 import inventory.model.Paging;
 import inventory.model.ProductInfo;
+import inventory.util.ConfigLoader;
 
 @Service
 public class ProductService {
@@ -86,12 +90,17 @@ public class ProductService {
 		productInfo.setActiveFlag(1);
 		productInfo.setCreateDate(new Date());
 		productInfo.setUpdateDate(new Date());
+		processUploadFile(productInfo.getMultipartFile());
 		productInfo.setImgUrl("/upload/"+productInfo.getMultipartFile().getOriginalFilename());
 		productInfoDAO.save(productInfo);
 	}
 	
 	public void updateProductInfo(ProductInfo productInfo) throws Exception{
 		logger.info("Update productInfo: "+productInfo.toString());
+		processUploadFile(productInfo.getMultipartFile());
+		if(productInfo.getMultipartFile()!= null) {
+			productInfo.setImgUrl("/upload/"+System.currentTimeMillis()+"_"+productInfo.getMultipartFile().getOriginalFilename());
+		}
 		productInfo.setUpdateDate(new Date());
 		productInfoDAO.update(productInfo);
 	}
@@ -133,5 +142,16 @@ public class ProductService {
 	public ProductInfo findByIdProductInfo(int id) {
 		logger.info("Find by ID: "+ id);
 		return productInfoDAO.findById(ProductInfo.class, id);
+	}
+	private void processUploadFile(MultipartFile multipartFile) throws IllegalStateException, IOException {
+		if(multipartFile!= null) {
+			File dir = new File(ConfigLoader.getInstance().getValue("upload.location"));
+			if(dir.exists()) {
+				dir.mkdirs();
+			}
+			String fileName = System.currentTimeMillis()+"_"+multipartFile.getOriginalFilename();
+			File file = new File(ConfigLoader.getInstance().getValue("upload.location"),fileName);
+			multipartFile.transferTo(file);
+		}
 	}
 }
