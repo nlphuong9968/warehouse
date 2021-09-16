@@ -18,4 +18,10 @@
 	<definition name="category-list" extends="master">
 		<put-attribute name="body" value="/WEB-INF/views/category/category-list.jsp"></put-attribute>
 	</definition>
+	<definition name="product-info-action" extends="master">
+		<put-attribute name="body" value="/WEB-INF/views/product-info/product-info-action.jsp"></put-attribute>
+	</definition>
+	<definition name="product-info-list" extends="master">
+		<put-attribute name="body" value="/WEB-INF/views/product-info/product-info-list.jsp"></put-attribute>
+	</definition>
 </tiles-definitions>

@@ -7,9 +7,8 @@ import java.util.Properties;
 public class ConfigLoader {
 	private Properties properties = null;
 	private static ConfigLoader instance = null;
-	
-	private ConfigLoader() {
-		String proFileName = "config.properties";
+	String proFileName = "config.properties";
+	private ConfigLoader(){
 		InputStream inputStream = getClass().getClassLoader().getResourceAsStream(proFileName);
 		if(inputStream!=null) {
 			properties = new Properties();
@@ -35,7 +34,7 @@ public class ConfigLoader {
 		return instance;
 	}
 	public String getValue(String key) {
-		if(properties.contains(key)) {
+		if(properties.containsKey(key)) {
 			return properties.getProperty(key);
 		}
 		return null;

@@ -146,7 +146,7 @@ public class ProductService {
 	private void processUploadFile(MultipartFile multipartFile) throws IllegalStateException, IOException {
 		if(multipartFile!= null) {
 			File dir = new File(ConfigLoader.getInstance().getValue("upload.location"));
-			if(dir.exists()) {
+			if(!dir.exists()) {
 				dir.mkdirs();
 			}
 			String fileName = System.currentTimeMillis()+"_"+multipartFile.getOriginalFilename();

@@ -84,6 +84,7 @@ public class ProductInfoController {
 		for (Category category : categories) {
 			mapCategory.put(String.valueOf(category.getId()), category.getName());
 		}
+		
 		model.addAttribute("mapCategory", mapCategory);
 		model.addAttribute("viewOnly", false);
 		return "product-info-action";		
@@ -99,6 +100,7 @@ public class ProductInfoController {
 			for (Category category : categories) {
 				mapCategory.put(String.valueOf(category.getId()), category.getName());
 			}
+			productInfo.setCateId(productInfo.getCategory().getId());
 			model.addAttribute("mapCategory", mapCategory);
 			model.addAttribute("titlePage", "Edit product-info");
 			model.addAttribute("modelForm", productInfo);
@@ -113,7 +115,14 @@ public class ProductInfoController {
 		log.info("Edit product-info with id ="+id);
 		ProductInfo productInfo = productService.findByIdProductInfo(id);
 		if(productInfo != null) {
+			List<Category> categories = productService.getAllCategory(null, null);
+			Map<String, String> mapCategory = new HashMap<String, String>();
+			for (Category category : categories) {
+				mapCategory.put(String.valueOf(category.getId()), category.getName());
+			}
+			productInfo.setCateId(productInfo.getCategory().getId());
 			model.addAttribute("titlePage", "View product-info");
+			model.addAttribute("mapCategory", mapCategory);
 			model.addAttribute("modelForm", productInfo);
 			model.addAttribute("viewOnly", true);
 			return "product-info-action";		
@@ -139,6 +148,9 @@ public class ProductInfoController {
 			model.addAttribute("viewOnly", false);
 			return "product-info-action";		
 		}
+		Category category = new Category();
+		category.setId(productInfo.getCateId());
+		productInfo.setCategory(category);
 		if(productInfo.getId()!=null && productInfo.getId()!=0) {
 			try {
 				productService.updateProductInfo(productInfo);
