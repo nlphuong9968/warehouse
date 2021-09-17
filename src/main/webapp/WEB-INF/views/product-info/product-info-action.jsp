@@ -77,7 +77,7 @@
 								<label for="multipartFile"
 									class="col-form-label col-md-3 col-sm-3 label-align">Image Upload</label>
 								<div class="col-md-6 col-sm-6 ">
-									<form:input path="multipartFile" cssClass="form-control " type="file" />
+									<form:input path="multipartFile" cssClass="form-control " type="file" value="abc"/>
 									<div class="has-error">
 										<form:errors path="multipartFile" cssClass="help-block"></form:errors>
 									</div>

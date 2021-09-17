@@ -46,7 +46,7 @@ public class ProductInfoValidator implements Validator{
 					errors.rejectValue("code", "msg.code.exist");
 				}
 			}
-			if(productInfo.getMultipartFile()!= null) {
+			if(!productInfo.getMultipartFile().getOriginalFilename().isEmpty()) {
 				String extension = FilenameUtils.getExtension(productInfo.getMultipartFile().getOriginalFilename());
 				if(!extension.equals("jpg") && !extension.equals("png") && !extension.equals("jpeg")) {
 					errors.rejectValue("multipartFile", "msg.file.extension.error");

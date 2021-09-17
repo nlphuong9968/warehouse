@@ -83,7 +83,7 @@
 									<th class="column-title">Id</th>
 									<th class="column-title">Code</th>
 									<th class="column-title">Name</th>
-									<th class="column-title">Description</th>
+									<th class="column-title">Image</th>
 									<th class="column-title no-link last text-center" colspan="3"><span
 										class="nobr">Action</span></th>
 
@@ -105,7 +105,7 @@
 									<td class=" ">${productInfos.id }</td>
 									<td class=" ">${productInfos.code }</td>
 									<td class=" ">${productInfos.name }</td>
-									<td class=" ">${productInfos.description }</td>
+									<td class=" "><img width="100px" height="100px" src="<c:url value="${productInfos.imgUrl}" />"></td>									
 									<td class="text-center"><a class="btn btn-round btn-info"
 										href="<c:url value="/product-info/view/${productInfos.id }"/> ">View</a></td>
 									<td class="text-center"><a
