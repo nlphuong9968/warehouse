@@ -103,7 +103,6 @@ public class LoginController {
 	}
 	
 	private void sortMenu(List<Menu> menus) {
-		System.out.println();
 		Collections.sort(menus, new Comparator<Menu>() {
 		
 			@Override
