@@ -19,6 +19,7 @@
 				</div>
 				<div class="x_content">
 					<a href="<c:url value="/goods-receipt/add"/>" class="btn btn-app"><i class="fa fa-plus"></i>Add</a>
+					<a href="<c:url value="/goods-receipt/export"/>" class="btn btn-app"><i class="fa fa-cloud-download"></i>Export</a>					
 					<div class="container" style="padding: 50px;">
 						<form:form modelAttribute="searchForm" cssClass="form-horizontal form-label-left" servletRelativeAction="/goods-receipt/list/1" method="POST">
 							<div class="form-group">
