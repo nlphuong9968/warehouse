@@ -34,15 +34,13 @@ public class InvoiceValidator implements Validator {
 		
 		if(invoice.getCode() != null) {
 			List<Invoice> results = invoiceService.find("code", invoice.getCode());
-			if(results !=null && !results.isEmpty()) {
-				if(invoice.getId() !=null && invoice.getId()!= 0) {
-					if(results.get(0).getId() != invoice.getId()) {
-						if(results.get(0).getId() != invoice.getId()) {
-							errors.rejectValue("code", "msg.code.exist");
-						}
-					}else {
+			if (results != null && !results.isEmpty()) {
+				if (invoice.getId() != null && invoice.getId() != 0) {
+					if (results.get(0).getId() != invoice.getId()) {
 						errors.rejectValue("code", "msg.code.exist");
 					}
+				} else {
+					errors.rejectValue("code", "msg.code.exist");
 				}
 			}
 		}

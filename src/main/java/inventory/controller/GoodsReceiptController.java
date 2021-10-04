@@ -53,7 +53,7 @@ public class GoodsReceiptController {
 		}
 		SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
-		if(binder.getTarget().getClass() == Category.class) {
+		if(binder.getTarget().getClass()== Invoice.class) {
 			binder.setValidator(invoiceValidator);
 		}
 	}
@@ -67,8 +67,12 @@ public class GoodsReceiptController {
 	public String showInvoiceList(Model model, HttpSession session,@ModelAttribute("searchForm") Invoice invoice, @PathVariable("page") int page) {
 		Paging paging = new Paging(1);
 		paging.setIndexPage(page);
-		List<Invoice> invoices = invoiceService.getList(invoice, paging);
-		if(session.getAttribute(Constant.MSG_SUCCESS)!= null) {
+		if(invoice==null) {
+			invoice = new Invoice();
+		}
+		invoice.setType(Constant.TYPE_GOODS_RECEIPT);
+		List<Invoice> invoices = invoiceService.getList(invoice,paging);
+		if(session.getAttribute(Constant.MSG_SUCCESS)!=null ) {
 			model.addAttribute(Constant.MSG_SUCCESS, session.getAttribute(Constant.MSG_SUCCESS));
 			session.removeAttribute(Constant.MSG_SUCCESS);
 		}
