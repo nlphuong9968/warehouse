@@ -57,4 +57,7 @@
 	<definition name="menu-list" extends="master">
 		<put-attribute name="body" value="/WEB-INF/views/menu/menu-list.jsp"></put-attribute>
 	</definition>
+	<definition name="menu-permission" extends="master">
+		<put-attribute name="body" value="/WEB-INF/views/menu/menu-permission.jsp"></put-attribute>
+	</definition>
 </tiles-definitions>
